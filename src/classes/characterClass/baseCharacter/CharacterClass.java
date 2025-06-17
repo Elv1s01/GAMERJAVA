@@ -1,8 +1,11 @@
 package classes.characterClass;
 
+import classes.enemyClass.EnemyClass;
+
 public abstract class CharacterClass {
     private  String nameClass;
     private  int hp, def, atk, mana;
+    private boolean status = true;
     
     public CharacterClass(String nameClass, int hp, int def, int atk, int mana) {
         this.nameClass = nameClass;
@@ -11,6 +14,23 @@ public abstract class CharacterClass {
         this.atk = atk;
         this.mana = mana;
     }
+
+
+    //MÉTODO PARA ATACAR OS INIMIGOS.
+    public void atk(EnemyClass enemyClass){
+        status = true;
+        enemyClass.setHp(enemyClass.getHp()-getAtk());
+    }
+
+    //MÉTODO PARA DEFENDER
+    public void def(){
+
+    }
+
+
+
+
+    
 
     //getters and setters
     public String getNameClass() {
@@ -51,6 +71,14 @@ public abstract class CharacterClass {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public boolean getStatus(){
+        return status;
+    }
+    
+    public void setStatus(boolean status){
+        this.status = status;
     }
     
     
