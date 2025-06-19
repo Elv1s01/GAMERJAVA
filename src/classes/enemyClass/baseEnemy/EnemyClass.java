@@ -1,4 +1,6 @@
-package classes.enemyClass;
+package classes.enemyClass.baseEnemy;
+
+import classes.characterClass.baseCharacter.CharacterClass;
 
 public abstract class EnemyClass {
     private String nameClass;
@@ -13,8 +15,17 @@ public abstract class EnemyClass {
     }
     
 
-    //gtters and setters
 
+    //MÉTODO PARA ATACAR DO INIMIGO. --> se vc se defende recebe um terço do dano.
+    public void atk(CharacterClass characterClass){
+        if (characterClass.getStatus()) {
+            characterClass.setHp(characterClass.getHp()-getAtk());
+        }else{
+            characterClass.setHp(characterClass.getHp()-getAtk()/3);
+        }
+    }
+
+    //gtters and setters
     public String getNameClass() {
         return nameClass;
     }

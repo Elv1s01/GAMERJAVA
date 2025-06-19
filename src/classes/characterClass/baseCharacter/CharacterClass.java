@@ -1,6 +1,6 @@
-package classes.characterClass;
+package classes.characterClass.baseCharacter;
 
-import classes.enemyClass.EnemyClass;
+import classes.enemyClass.baseEnemy.EnemyClass;
 
 public abstract class CharacterClass {
     private  String nameClass;
@@ -22,9 +22,9 @@ public abstract class CharacterClass {
         enemyClass.setHp(enemyClass.getHp()-getAtk());
     }
 
-    //MÉTODO PARA DEFENDER
+    //MÉTODO PARA DEFENDER --> se defender diminui o dano pela metade.
     public void def(){
-
+        setStatus(false);
     }
 
 
