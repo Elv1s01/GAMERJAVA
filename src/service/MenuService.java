@@ -7,13 +7,22 @@ import classes.characterClass.Barbarian;
 import classes.characterClass.Warrior;
 import classes.characterClass.Wizard;
 import classes.characterClass.baseCharacter.*;
+import classes.enemyClass.Golem;
+import classes.enemyClass.Skeleton;
+import classes.enemyClass.Slime;
+import classes.enemyClass.Witch;
+import classes.enemyClass.baseEnemy.EnemyClass;
 import player.Player;
+import repository.EnemyRepository;
 import repository.PlayerRepository;
+import java.util.Random;
 
 public class MenuService {
     private PlayerRepository playerRepository = new PlayerRepository();
+    private EnemyRepository enemyRepository = new EnemyRepository();
 
     Scanner in = new Scanner(System.in);
+    Random random = new Random();
 
     //Método new game -> Resposável po identificar um novo jogo.
     public void newGame(){
@@ -49,10 +58,10 @@ public class MenuService {
                 int amount = in.nextInt();
                 in.nextLine();
                 for(int i = 1; i <= amount; i++){
-                    System.out.printf(">Jogador %d, informe seu nome:", i);
+                    System.out.printf("\n>Jogador %d, informe seu nome:", i);
                     String name = in.nextLine();
                     System.out.printf(">Bem vindo %s, qual classe você deseja?", name);
-                    System.out.println("1 - Warrior.\n2 - Barbarian.\n3 - Assassin.\n4 - Wizard.");
+                    System.out.println("\n1 - Warrior.\n2 - Barbarian.\n3 - Assassin.\n4 - Wizard.");
                     int choice = in.nextInt();  //Possível exceçao futuramente, caso o usuário digite uma string.
                     in.nextLine();
                     CharacterClass characterClass;
@@ -81,12 +90,48 @@ public class MenuService {
                 
             } catch (InputMismatchException e) {
                 System.out.println(">Digite uma opção válida, por favor.");
+                in.nextLine(); //Proceso de limpar o buffer, ou se não o loop se repete infinitamente.
                 //continue - provavelmente é algo desnecessário.
             }  
         }
     }
+    public void createEnemy(){
+        int amount = random.nextInt(5) + 1; //Recebe um valor aleátorio de 1 a 5.
+        for(int i = 1; i <= amount; i++){
+            int enemy = random.nextInt(4) + 1; //Claase do inimigo gerda automaticamente.
+            //Cada loop no for a lsita de inimigos deve receber um inimigo aleátorio.
+            switch (enemy) {
+                case 1:
+                    enemyRepository.addEnemy(new Skeleton());
+                    break;
+                case 2:
+                    enemyRepository.addEnemy(new Slime());
+                    break;
+                case 3:
+                    enemyRepository.addEnemy(new Golem());
+                    break;
+                case 4:
+                    enemyRepository.addEnemy(new Witch());
+                    break;
+            }
+        }
+    }
+    public void startGame(){
+        boolean running = true; 
 
-    
+        while(running){
+            //Mostra os player com seus status atuais.
+            for (Player player : playerRepository.getList()) {
+                player.status();
+            }
+            //Mostra os monstros e seus status
+            for (EnemyClass enemyClass : enemyRepository.getList()) {
+                enemyClass.status();
+            }
+
+
+        }
+    } 
 
 
 

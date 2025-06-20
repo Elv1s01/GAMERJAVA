@@ -21,10 +21,10 @@ public class PlayerRepository {
     }
 
     public void showPlayer(){
-        //int i = 1;
+        int i = 1;
         for (Player player : players) {
-            System.out.printf("%d - %s, %s\n", player.getName(), player.getClass());
-            //i++;
+            System.out.printf("%d - %s, %s\n", i, player.getName(), player.getClass());
+            i++;
         }
     }
     
