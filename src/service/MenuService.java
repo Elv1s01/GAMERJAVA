@@ -23,7 +23,8 @@ public class MenuService {
                 in.nextLine();
 
                 if (choice == 1) {
-                    createPlayer();;
+                    createPlayer();
+                    break;
 
                     
                 }else{
@@ -36,8 +37,7 @@ public class MenuService {
             } catch (InputMismatchException e) {
                 System.out.println(">Número não se encntra entre as opções.");
                 System.out.println(">Digite um número válido.");
-                continue;
-
+                in.nextLine();
             }
         }
     }
@@ -53,7 +53,7 @@ public class MenuService {
                     String name = in.nextLine();
                     System.out.printf(">Bem vindo %s, qual classe você deseja?", name);
                     System.out.println("1 - Warrior.\n2 - Barbarian.\n3 - Assassin.\n4 - Wizard.");
-                    int choice = in.nextInt();
+                    int choice = in.nextInt();  //Possível exceçao futuramente, caso o usuário digite uma string.
                     in.nextLine();
                     CharacterClass characterClass;
                     
@@ -77,16 +77,13 @@ public class MenuService {
                     }
                     playerRepository.addPlayer(new Player(name, characterClass));
                 }
+                break;  //Quando sair do for() eu paro o loop while()
                 
             } catch (InputMismatchException e) {
                 System.out.println(">Digite uma opção válida, por favor.");
-                continue;
-            }
-            
+                //continue - provavelmente é algo desnecessário.
+            }  
         }
-
-
-
     }
 
     
