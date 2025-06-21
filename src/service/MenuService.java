@@ -120,20 +120,33 @@ public class MenuService {
         boolean running = true; 
 
         while(running){
-            //Mostra os player com seus status atuais.
+            showStatus();
+            System.out.println(">\nTurno dos jogadores!");
             for (Player player : playerRepository.getList()) {
-                player.status();
+                System.out.printf(">Vai %s! O que você faz?!", player.getName());
+                 choice; //O proxímo bloco garante que será digitado uma opção válida.
+                do{
+
+                }while(true);
+
+                
             }
-            //Mostra os monstros e seus status
-            for (EnemyClass enemyClass : enemyRepository.getList()) {
-                enemyClass.status();
-            }
+
+
 
 
         }
     } 
 
-
+//Criar método estático para tentar resolver um problema.
+    public void showStatus(){
+        for (Player player : playerRepository.getList()) {
+            player.status();
+        }
+        for (EnemyClass enemyClass : enemyRepository.getList()) {
+            enemyClass.status();
+        }
+    }
 
     
 }

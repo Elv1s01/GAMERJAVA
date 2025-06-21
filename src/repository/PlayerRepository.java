@@ -27,6 +27,10 @@ public class PlayerRepository {
             i++;
         }
     }
+
+    public List<Player> getList(){
+        return players;
+    }
     
 
 

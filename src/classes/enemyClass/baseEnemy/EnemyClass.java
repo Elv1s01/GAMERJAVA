@@ -15,7 +15,9 @@ public abstract class EnemyClass {
     }
     
 
-
+    public void status(){
+        System.out.printf("\n%s - vida:%d defesa:%d atk:%d mana:%d\n", getNameClass(), getHp(), getDef(), getAtk(), getMana());
+    }
     //MÉTODO PARA ATACAR DO INIMIGO. --> se vc se defende recebe um terço do dano.
     public void atk(CharacterClass characterClass){
         if (characterClass.getStatus()) {

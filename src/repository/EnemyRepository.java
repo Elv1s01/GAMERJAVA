@@ -17,9 +17,11 @@ public class EnemyRepository {
     public void showEnemy(){
         int i = 1;
         for (EnemyClass enemyClass : enemys) {
-            System.out.printf("\n%d - %s", enemyClass.get);
-            
+            System.out.printf("\n%d - %s", i, enemyClass.getNameClass());
+            i++;
         }
     }
-    
+    public List<EnemyClass> getList(){
+        return enemys;
+    }
 }

@@ -11,8 +11,12 @@ public class Player {
         this.characterClass = characterClass;
     }
 
+    public void status(){
+        System.out.printf("\n%s - vida:%d defesa:%d ataque:%d mana:%d\n",name, characterClass.getHp(), characterClass.getDef(), characterClass.getAtk(), characterClass.getMana());
+    }
 
-    //GETTERS AND SETTERS
+
+    //GETTERS AND SETTER
     public String getName() {
         return name;
     }
