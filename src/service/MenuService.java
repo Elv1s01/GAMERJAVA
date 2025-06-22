@@ -120,21 +120,53 @@ public class MenuService {
         boolean running = true; 
 
         while(running){
+            //Intenção dos Inimigos - Dessa forma fica possível se defender de maneira efetiva.
+            for (EnemyClass enemyClass : enemyRepository.getList()) {
+                enemyClass.intetion(playerRepository.getList(), false);
+            }
+            //Turno dos jogadores
+
             showStatus();
             System.out.println(">\nTurno dos jogadores!");
             for (Player player : playerRepository.getList()) {
-                System.out.printf(">Vai %s! O que você faz?!", player.getName());
-                 choice; //O proxímo bloco garante que será digitado uma opção válida.
+                System.out.printf("\n>Vai %s! O que você faz?!", player.getName());
+                String choice; //O proxímo bloco garante que será digitado uma opção válida.
                 do{
+                    System.out.println("1 - Atacar\n2 - Defender\n3 - Pular Turno");
+                    choice = in.nextLine();
 
-                }while(true);
+                    if (choice.equals("1")) { //Aqui está implementado o possǘel atk do player.
+                        do{
+                            System.out.println(">Qual monstro?\n");
+                            enemyRepository.showEnemy();
+                            choice = in.nextLine();
+                        }while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4") && !choice.equals("5"));
+                        player.atk(enemyRepository.getList().get(Integer.parseInt(choice)-1));
+                        System.out.printf(">%s atacou %s, causando %d de dano.", player.getName(), player.getCharacterClass().getAtk());
+                        loser();
+                        showStatus();
+                        System.out.printf(">\nFim do turno de %s", player.getName());
 
+                    }else if(choice.equals("2")){ //Aqui está implementado a possível defesa do player.
+                        player.def();
+                        System.out.printf("\n>%s se defendeu, diminuindo o dano em %d%!", player.getName(), player.getCharacterClass().getDef());
+                        System.out.println(">Fim do turno!");
+                        loser();
+                        showStatus();
+
+                    }else if(choice.equals("3")){ // Aqui o jogador pula o turno, por algum motivo.
+                        System.out.printf(">%s pulou o turno!", player.getName());
+                        loser();
+                        showStatus();
+                    }else{
+                        System.out.printf(">%s, deixa de ser burro e escolhe uma opção válida. Nam!", player.getName());
+                    }
+
+                }while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
                 
             }
 
-
-
-
+            
         }
     } 
 
@@ -147,6 +179,24 @@ public class MenuService {
             enemyClass.status();
         }
     }
+    public void loser(){
+        for (EnemyClass enemyClass : enemyRepository.getList()) {
+            if (enemyClass.getHp() <= 0) {
+                System.out.printf(">O %s foi morto!",enemyClass.getNameClass());
+                enemyRepository.removeEnemy(enemyClass);
+            }
+        }
+        for (Player player : playerRepository.getList()) {
+            if (player.getCharacterClass().getHp() <= 0) {
+                System.out.printf(">%s morreu :( , vocês conseguem!");
+                playerRepository.removePlayer(player);
+            } 
+        }
+    }
+    public void monsterThreat(){
+        for (EnemyClass enemyClass : enemyRepository.getList()) {
+            
+        }
 
-    
+    } 
 }

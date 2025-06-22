@@ -1,6 +1,7 @@
 package player;
 
 import classes.characterClass.baseCharacter.CharacterClass;
+import classes.enemyClass.baseEnemy.EnemyClass;
 
 public class Player {
     private String name;
@@ -11,8 +12,19 @@ public class Player {
         this.characterClass = characterClass;
     }
 
+    public void atk(EnemyClass enemyClass){
+        if (getCharacterClass().getStatus() == false) {
+            getCharacterClass().setStatus(true);
+        }
+        getCharacterClass().atk(enemyClass);
+    }
+
+    public void def(){
+        getCharacterClass().def();
+    }
+
     public void status(){
-        System.out.printf("\n%s - vida:%d defesa:%d ataque:%d mana:%d\n",name, characterClass.getHp(), characterClass.getDef(), characterClass.getAtk(), characterClass.getMana());
+        System.out.printf("\n%s - vida:%d defesa:%d% ataque:%d mana:%d\n",name, characterClass.getHp(), characterClass.getDef(), characterClass.getAtk(), characterClass.getMana());
     }
 
 

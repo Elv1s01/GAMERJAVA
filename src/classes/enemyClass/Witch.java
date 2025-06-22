@@ -4,6 +4,6 @@ import classes.enemyClass.baseEnemy.EnemyClass;
 
 public class Witch extends EnemyClass {
     public Witch(){
-        super("Bruxa", 400, 400, 700, 700);
+        super("Bruxa", 400, 20, 700, 700);
     }
 }
