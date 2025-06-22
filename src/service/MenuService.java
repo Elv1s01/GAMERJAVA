@@ -53,10 +53,14 @@ public class MenuService {
     public void createPlayer(){
         System.out.println(">Quantos jogadores vão participar?");
         System.out.println("> 1\n> 2\n> 3\n> 4");
+        int amount;  //Tive que declarar a variável antes.
         while (true) {
             try {
-                int amount = in.nextInt();
-                in.nextLine();
+                do {
+                    amount = in.nextInt();
+                    in.nextLine();
+                } while (!(amount == 1) && !(amount == 2) && !(amount == 3) && !(amount == 4));
+
                 for(int i = 1; i <= amount; i++){
                     System.out.printf("\n>Jogador %d, informe seu nome:", i);
                     String name = in.nextLine();
@@ -117,10 +121,14 @@ public class MenuService {
         }
     }
     public void startGame(){
+        createEnemy();
         boolean running = true; 
         System.out.println("\n>The Game Start-----------------");
+        int turn = 1;
 
         while(running){
+            System.out.printf("\n\n\nTURNO -----> %d\n\n", turn);
+            turn++;
             //Intenção dos Inimigos - Dessa forma fica possível se defender de maneira efetiva.
             for (EnemyClass enemyClass : enemyRepository.getList()) {
                 enemyClass.intetion(playerRepository.getList(), false);
@@ -145,30 +153,34 @@ public class MenuService {
                         EnemyClass enemy = enemyRepository.getList().get(Integer.parseInt(choice)-1);
                         player.atk(enemy);
                         System.out.printf(">%s atacou %s, causando %d de dano.", player.getName(), enemy.getNameClass(),  player.getCharacterClass().getAtk());
-                        loser();
                         showStatus();
                         System.out.printf(">\nFim do turno de %s", player.getName());
+                        running = loser();
 
                     }else if(choice.equals("2")){ //Aqui está implementado a possível defesa do player.
                         player.def();
-                        System.out.printf("\n>%s se defendeu, diminuindo o dano em %d%!", player.getName(), player.getCharacterClass().getDef());
+                        System.out.printf("\n>%s se defendeu, diminuindo o dano em %d porcento!", player.getName(), player.getCharacterClass().getDef());
                         System.out.println(">Fim do turno!");
-                        loser();
                         showStatus();
+                        running = loser();
 
                     }else if(choice.equals("3")){ // Aqui o jogador pula o turno, por algum motivo.
                         System.out.printf(">%s pulou o turno!", player.getName());
-                        loser();
                         showStatus();
+                        running = loser();
                     }else{
                         System.out.printf(">%s, deixa de ser burro e escolhe uma opção válida. Nam!", player.getName());
                     }
 
                 }while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
-                
             }
-
-
+            //Turno dos Inimigos
+            for (EnemyClass enemyClass : enemyRepository.getList()) {
+                System.out.printf(">%s atacou, cuidado kkkk, tu morre.", enemyClass.getNameClass());
+                enemyClass.intetion(playerRepository.getList(), true);
+                running = loser();
+            }
+            System.out.println(">Fim do turno dos inimigos\n\n");
         }
     } 
 
@@ -181,10 +193,21 @@ public class MenuService {
             enemyClass.status();
         }
     }
-    public void loser(){
+    public boolean loser(){
+        //Método resposável em parar a lista.
         enemyRepository.getList().removeIf(enemy -> enemy.getHp() <= 0);
         playerRepository.getList().removeIf(player -> player.getCharacterClass().getHp() <= 0);
         System.out.println("\n\nJogadores e monstros podem ter morridos...\n");
+        if (enemyRepository.getList().isEmpty()) {
+            System.out.println(">TODOS OS INIMIGOS DERROTADOS!!PARABÉNS CAMPEÕES!");
+            return false;
+        }else if(playerRepository.getList().isEmpty()){
+            System.out.println("\n\n\n----------GAMER OVER-----------\n\n\\n");
+            return false;
+        }else{
+            return true;
+        }
     }
-    
+
+//Fim. Essa Peste foi trabalhosa viu...  
 }

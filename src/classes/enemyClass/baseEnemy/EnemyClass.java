@@ -19,9 +19,13 @@ public abstract class EnemyClass {
     
     public void intetion(List<Player> players, boolean action){
         if (action) {
-            for (Player player : intetion) {
-                atk(player.getCharacterClass());
-                intetion[0] = null;
+            for (Player player : players) {
+                if (player == intetion[0]) {
+                    atk(player.getCharacterClass());
+                    intetion[0] = null;
+                }else{
+                    System.out.printf(">Como esse jogador morreu %s pulou o turno.", getNameClass());
+                }
             }
         }else{
             Random random = new Random();

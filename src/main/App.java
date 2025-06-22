@@ -9,8 +9,8 @@ public class App {
         System.out.println("     > 1 - NEW GAME");
         System.out.println("     > 2 - INFORMAÇÕES DO JOGO");
         menu.newGame();
-        menu.createEnemy();
         menu.startGame();
+
 
 
     
