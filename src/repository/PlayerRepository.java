@@ -8,7 +8,7 @@ public class PlayerRepository {
 
     public void addPlayer(Player player){
         players.add(player);
-        System.out.printf(">%s foi adicionado!", player.getName());
+        System.out.printf(">%s foi adicionado!\n\n", player.getName());
     }
 
     public void removePlayer(Player player){

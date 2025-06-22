@@ -24,7 +24,7 @@ public class Player {
     }
 
     public void status(){
-        System.out.printf("\n%s - vida:%d defesa:%d% ataque:%d mana:%d\n",name, characterClass.getHp(), characterClass.getDef(), characterClass.getAtk(), characterClass.getMana());
+        System.out.printf("\n%s - vida:%d defesa:%d ataque:%d mana:%d\n", getName(), characterClass.getHp(), characterClass.getDef(), characterClass.getAtk(), characterClass.getMana());
     }
 
 

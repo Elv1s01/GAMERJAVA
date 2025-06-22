@@ -73,10 +73,10 @@ public class MenuService {
                         case 2:
                             characterClass = new Barbarian();
                             break;
-                        case 4:
+                        case 3:
                             characterClass = new Assassin();
                             break;
-                        case 5:
+                        case 4:
                             characterClass = new Wizard();
                             break;
                         default:
@@ -118,6 +118,7 @@ public class MenuService {
     }
     public void startGame(){
         boolean running = true; 
+        System.out.println("\n>The Game Start-----------------");
 
         while(running){
             //Intenção dos Inimigos - Dessa forma fica possível se defender de maneira efetiva.
@@ -132,7 +133,7 @@ public class MenuService {
                 System.out.printf("\n>Vai %s! O que você faz?!", player.getName());
                 String choice; //O proxímo bloco garante que será digitado uma opção válida.
                 do{
-                    System.out.println("1 - Atacar\n2 - Defender\n3 - Pular Turno");
+                    System.out.println("\n1 - Atacar\n2 - Defender\n3 - Pular Turno");
                     choice = in.nextLine();
 
                     if (choice.equals("1")) { //Aqui está implementado o possǘel atk do player.
@@ -141,8 +142,9 @@ public class MenuService {
                             enemyRepository.showEnemy();
                             choice = in.nextLine();
                         }while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4") && !choice.equals("5"));
-                        player.atk(enemyRepository.getList().get(Integer.parseInt(choice)-1));
-                        System.out.printf(">%s atacou %s, causando %d de dano.", player.getName(), player.getCharacterClass().getAtk());
+                        EnemyClass enemy = enemyRepository.getList().get(Integer.parseInt(choice)-1);
+                        player.atk(enemy);
+                        System.out.printf(">%s atacou %s, causando %d de dano.", player.getName(), enemy.getNameClass(),  player.getCharacterClass().getAtk());
                         loser();
                         showStatus();
                         System.out.printf(">\nFim do turno de %s", player.getName());
@@ -166,7 +168,7 @@ public class MenuService {
                 
             }
 
-            
+
         }
     } 
 
@@ -180,23 +182,9 @@ public class MenuService {
         }
     }
     public void loser(){
-        for (EnemyClass enemyClass : enemyRepository.getList()) {
-            if (enemyClass.getHp() <= 0) {
-                System.out.printf(">O %s foi morto!",enemyClass.getNameClass());
-                enemyRepository.removeEnemy(enemyClass);
-            }
-        }
-        for (Player player : playerRepository.getList()) {
-            if (player.getCharacterClass().getHp() <= 0) {
-                System.out.printf(">%s morreu :( , vocês conseguem!");
-                playerRepository.removePlayer(player);
-            } 
-        }
+        enemyRepository.getList().removeIf(enemy -> enemy.getHp() <= 0);
+        playerRepository.getList().removeIf(player -> player.getCharacterClass().getHp() <= 0);
+        System.out.println("\n\nJogadores e monstros podem ter morridos...\n");
     }
-    public void monsterThreat(){
-        for (EnemyClass enemyClass : enemyRepository.getList()) {
-            
-        }
-
-    } 
+    
 }
