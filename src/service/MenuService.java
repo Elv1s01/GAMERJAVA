@@ -54,6 +54,7 @@ public class MenuService {
         System.out.println(">Quantos jogadores vão participar?");
         System.out.println("> 1\n> 2\n> 3\n> 4");
         int amount;  //Tive que declarar a variável antes.
+        int amount;  //Tive que declarar a variável antes.
         while (true) {
             try {
                 do {
@@ -122,11 +123,15 @@ public class MenuService {
     }
     public void startGame(){
         createEnemy();
+        createEnemy();
         boolean running = true; 
         System.out.println("\n>The Game Start-----------------");
         int turn = 1;
+        int turn = 1;
 
         while(running){
+            System.out.printf("\n\n\nTURNO -----> %d\n\n", turn);
+            turn++;
             System.out.printf("\n\n\nTURNO -----> %d\n\n", turn);
             turn++;
             //Intenção dos Inimigos - Dessa forma fica possível se defender de maneira efetiva.
@@ -156,17 +161,21 @@ public class MenuService {
                         showStatus();
                         System.out.printf(">\nFim do turno de %s", player.getName());
                         running = loser();
+                        running = loser();
 
                     }else if(choice.equals("2")){ //Aqui está implementado a possível defesa do player.
                         player.def();
                         System.out.printf("\n>%s se defendeu, diminuindo o dano em %d porcento!", player.getName(), player.getCharacterClass().getDef());
+                        System.out.printf("\n>%s se defendeu, diminuindo o dano em %d porcento!", player.getName(), player.getCharacterClass().getDef());
                         System.out.println(">Fim do turno!");
                         showStatus();
+                        running = loser();
                         running = loser();
 
                     }else if(choice.equals("3")){ // Aqui o jogador pula o turno, por algum motivo.
                         System.out.printf(">%s pulou o turno!", player.getName());
                         showStatus();
+                        running = loser();
                         running = loser();
                     }else{
                         System.out.printf(">%s, deixa de ser burro e escolhe uma opção válida. Nam!", player.getName());
@@ -193,6 +202,8 @@ public class MenuService {
             enemyClass.status();
         }
     }
+    public boolean loser(){
+        //Método resposável em parar a lista.
     public boolean loser(){
         //Método resposável em parar a lista.
         enemyRepository.getList().removeIf(enemy -> enemy.getHp() <= 0);
